@@ -1,0 +1,76 @@
+{
+  "kubernetes": {
+      "version": "1.10.4"
+  },
+  "docker": {
+      "version": "18.03.1-ce"
+  },
+  "nodes": [
+    {
+      "ip": "192.168.2.82",
+      "arch": "x86_64",
+      "etcd": true,
+      "kube_master": true,
+      "hostnames": [
+        "nuc-18",
+        "etcd0",
+        "etcd",
+        "master0",
+        "master"
+      ]
+    },
+    {
+      "ip": "192.168.2.80",
+      "arch": "x86_64",
+      "etcd": true,
+      "kube_master": true,
+      "hostnames": [
+        "nuc-17",
+        "etcd1",
+        "etcd",
+        "master1",
+        "master"
+      ]
+    },
+    {
+      "ip": "192.168.2.79",
+      "arch": "x86_64",
+      "etcd": true,
+      "kube_master": true,
+      "hostnames": [
+        "nuc-16",
+        "etcd2",
+        "etcd",
+        "master2",
+        "master"
+      ]
+    },
+    {
+      "ip": "192.168.2.94",
+      "arch": "x86_64",
+      "kube_worker": true,
+      "hostnames": [
+        "nuc-15",
+        "worker0"
+      ]
+    },
+    {
+      "ip": "192.168.2.91",
+      "arch": "x86_64",
+      "kube_worker": true,
+      "hostnames": [
+        "nuc-14",
+        "worker1"
+      ]
+    },
+    {
+      "ip": "192.168.2.93",
+      "arch": "x86_64",
+      "kube_worker": true,
+      "hostnames": [
+        "nuc-13",
+        "worker2"
+      ]
+    }
+  ]
+}

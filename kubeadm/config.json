@@ -1,0 +1,16 @@
+{
+    "apiVersion": "kubeadm.k8s.io/v1alpha1",
+    "kind": "MasterConfiguration",
+    "api": {},
+    "etcd": {
+        "caFile": "/etc/kubernetes/pki/etcd/ca.pem",
+        "certFile": "/etc/kubernetes/pki/etcd_client.pem",
+        "keyFile": "/etc/kubernetes/pki/etcd_client-key.pem"
+    },
+    "networking": {
+        "podSubnet": "10.90.0.0/16"
+    },
+    "apiServerExtraArgs": {
+        "endpoint-reconciler-type": "lease"
+    }
+}

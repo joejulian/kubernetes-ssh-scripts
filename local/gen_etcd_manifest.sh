@@ -1,7 +1,7 @@
 #!/bin/sh
 
 gen_etcd_manifest() {
-    local CONFIG_SOURCE=spec/manifests/etcd.json
+    local CONFIG_SOURCE=${PWD}/spec/manifests/etcd.json
 
     local INITIAL_CLUSTER=$(jq -c -r '[.nodes[] | { "node": .hostnames[] | scan("etcd[0-9]+"), "ip": .ip}] | [.[] as $i | ("\($i.node)=https://\($i.ip):2380")] | join(",")' <<< $1)
 
@@ -20,7 +20,7 @@ gen_etcd_manifest() {
         jq '.spec.containers[0].env+=[{"name":"PEER_NAME","value":'${NODENAME}'}]' |
         jq '.spec.container[0].env+=[{"name":"INITIAL_CLUSTER","value":"'${INITIAL_CLUSTER}'"}]' > etcd.json
 
-        echo "Generated etcd kubelet manifest"
+        echo "Generated etcd kubelet manifest for $NODENAME"
 
         popd > /dev/null
     done

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 gen_kubeadm_config() {
-    local CONFIG_DIR=spec/kubeadm
+    local CONFIG_DIR=${PWD}/spec/kubeadm
     local ETCD_ENDPOINTS=$(jq -c -r '[.nodes[] | .hostnames[] | scan("etcd[0-9]+") | . as $i | ("https://\($i):2379/")]' <<< $1)
 
     for host in $(jq -c ".nodes[] | select(.kube_master)" <<< $1); do

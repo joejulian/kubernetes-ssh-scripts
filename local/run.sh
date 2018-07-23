@@ -37,7 +37,7 @@ for script in $scripts; do
     source ${PREFIX}/${script}.sh
 done
 
-${PREFIX}/gen_ca.sh
+gen_ca
 
 parallel_scripts="gen_etcd_certs gen_etcd_client_cert gen_etcd_manifest gen_hosts gen_kubeadm_config"
 

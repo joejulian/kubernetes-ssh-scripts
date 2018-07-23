@@ -6,7 +6,7 @@ gen_ca() {
     pushd ${OUTPUT_DIR}/${CERT_DIR} > /dev/null
 
     # Generate CA certificate and key
-    cfssl gencert -initca -config ${CA_CONFIG_DIR}/ca-config.json ${CA_CONFIG_DIR}/ca-csr.json | cfssljson -bare ca - > /dev/null
+    ( cfssl gencert -initca -config ${CA_CONFIG_DIR}/ca-config.json ${CA_CONFIG_DIR}/ca-csr.json | cfssljson -bare ca - ) 2> /dev/null
     echo "Generated CA certificate"
 
     popd > /dev/null

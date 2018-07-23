@@ -25,11 +25,11 @@ gen_etcd_certs() {
         pushd ${OUTPUT_DIR}/${CERT_DIR}/etcd > /dev/null
 
         # generate etcd peer and server certificates
-        cfssl print-defaults csr | sed '0,/CN/{s/example\.net/'${PRIMARY_HOSTNAME}'/}' | jq 'del(.hosts[])' | jq ".hosts = "${DNS_ALIASES} > config.json
-        cfssl gencert -ca=${CA_DIR}/ca.pem -ca-key=${CA_DIR}/ca-key.pem -config=${CA_CONFIG_DIR}/ca-config.json -profile=server config.json | cfssljson -bare server > /dev/null
-        echo "Generated etcd server certificate"
-        cfssl gencert -ca=${CA_DIR}/ca.pem -ca-key=${CA_DIR}/ca-key.pem -config=${CA_CONFIG_DIR}/ca-config.json -profile=peer   config.json | cfssljson -bare peer > /dev/null
-        echo "Generated etcd peer certificate"
+        ( cfssl print-defaults csr | sed '0,/CN/{s/example\.net/'${PRIMARY_HOSTNAME}'/}' | jq 'del(.hosts[])' | jq ".hosts = "${DNS_ALIASES} > config.json ) 2> /dev/null
+        ( cfssl gencert -ca=${CA_DIR}/ca.pem -ca-key=${CA_DIR}/ca-key.pem -config=${CA_CONFIG_DIR}/ca-config.json -profile=server config.json | cfssljson -bare server ) 2> /dev/null
+        echo "Generated etcd server certificate for $PRIMARY_HOSTNAME"
+        ( cfssl gencert -ca=${CA_DIR}/ca.pem -ca-key=${CA_DIR}/ca-key.pem -config=${CA_CONFIG_DIR}/ca-config.json -profile=peer   config.json | cfssljson -bare peer ) 2> /dev/null
+        echo "Generated etcd peer certificate for $PRIMARY_HOSTNAME"
 
         popd > /dev/null
     done

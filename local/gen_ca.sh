@@ -1,14 +1,13 @@
 #!/bin/sh
 
-# Set path variables
-OUTPUT_PREFIX=${OUTPUT_PREFIX:=output}
-OUTPUT_DIR=${OUTPUT_PREFIX}/common
-CERT_DIR=${CERT_DIR:=etc/kubernetes/pki}
-CA_CONFIG_DIR=${PWD}/spec/pki/ca
+gen_ca() {
+    # Create and use output path
+    mkdir -p ${OUTPUT_DIR}/${CERT_DIR}
+    pushd ${OUTPUT_DIR}/${CERT_DIR} > /dev/null
 
-# Create and use output path
-mkdir -p ${OUTPUT_DIR}/${CERT_DIR}
-cd ${OUTPUT_DIR}/${CERT_DIR}
+    # Generate CA certificate and key
+    cfssl gencert -initca -config ${CA_CONFIG_DIR}/ca-config.json ${CA_CONFIG_DIR}/ca-csr.json | cfssljson -bare ca - > /dev/null
+    echo "Generated CA certificate"
 
-# Generate CA certificate and key
-cfssl gencert -initca -config ${CA_CONFIG_DIR}/ca-config.json ${CA_CONFIG_DIR}/ca-csr.json | cfssljson -bare ca -
+    popd > /dev/null
+}
